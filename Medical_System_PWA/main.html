@@ -1,0 +1,256 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Medical_System</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js'></script>
+		<script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.3.2/locales/zh-tw.js'></script>
+
+		<!-- PWA -->
+		<link rel="manifest" href="manifest.json">
+		<meta name="theme-color" content="#000000">
+		<link rel="apple-touch-icon" href='images/android/playstore-icon.png'>
+
+		<style>
+			/* 自定義 FullCalendar 的字體 */
+			body, .fc th, .fc-day-header, .fc-event-title {
+			font-family: '微軟正黑體', sans-serif;
+			}
+			.fc-event {
+			  min-width: 50px;
+			  font-size: 10px;
+			}
+			.fc-event-title {
+			  display: none;
+			}	
+		</style>
+
+		<!--
+		<script>
+			document.addEventListener('DOMContentLoaded', function() {
+			var calendarEl = document.getElementById('calendar');
+
+			// 獲取 URL 參數
+			const urlParams = new URLSearchParams(window.location.search);
+			const username = urlParams.get('username');
+			const password = urlParams.get('password');
+			const childname = urlParams.get('childname');
+			const parentname = urlParams.get('parentname');
+			const classroomsString = urlParams.get('classroom'); // 取得 classroom 字串，例如 "10801,10802"
+			const classrooms = classroomsString.split(','); // 使用逗號分隔字串並存入陣列
+
+			var events_colors = ['#3498DB', '#E74C3C', '#2ECC71', '#F39C12', '#9B59B6'];
+
+			console.error('班級：', classrooms);
+
+			var all_event = [];
+			var color_index = 0; // 用於選擇顏色
+
+			fetch('https://script.google.com/macros/s/AKfycbzQ7Lx6EYmB6cUuyWQvpuIHdRrS42rHR1osFTH0dc2BIEUDWHb57B8dNZwzF9UuLZg/exec')
+				.then(response => response.json())
+				.then(data => {
+					var classroomData = {}; // 建立物件來存放每個 classroom 的事件
+					
+					// 將 data 整理成以 classroom 為鍵的物件
+					data.forEach(event => {
+						if (!classroomData[event.classroom]) {
+							classroomData[event.classroom] = [];
+							
+						}
+						console.error('清單1：', event.course);
+						classroomData[event.classroom].push(event.course);
+						classroomData[event.classroom].push(event.teacher);
+						const datesArray = event.dates.split(','); // 將日期字串分隔成陣列
+						classroomData[event.classroom].push(...datesArray);	
+						classroomData[event.classroom].push(event.news);
+
+					});
+					
+					// 將符合指定班級的事件加入 all_event
+					classrooms.forEach(classroom => {
+						if (classroomData[classroom]) {
+							console.error('清單5：',classroomData[classroom] );
+							
+							// 創建一個新的 <p> 元素
+							var classroomInfoElement = document.createElement('p');
+							classroomInfoElement.innerHTML = `班級代碼 : ${classroom} (${classroomData[classroom][0]}) / 講師 : ${classroomData[classroom][1]}`;
+							// 創建一個新的 <p> 元素來顯示班級公告
+							var classroomNewsElement = document.createElement('p');
+							classroomNewsElement.innerHTML = `班級公佈欄 : ${classroomData[classroom][classroomData[classroom].length - 1]}`;
+
+							// 找到包含信息的父元素
+							var classroomInfoContainer = document.getElementById('classroom-info');
+							var classroomNewsContainer = document.getElementById('classroom-info');
+							// 將 <p> 元素添加到父元素中
+							classroomInfoContainer.appendChild(classroomInfoElement);
+							classroomNewsContainer.appendChild(classroomNewsElement);
+
+							classroomData[classroom].forEach(dates => {
+								var eventItem = {
+									title: classroom,
+									start: dates,
+									color: events_colors[color_index % events_colors.length] // 使用餘數來選擇顏色[i % classroomCount] // 使用餘數來選擇顏色
+								};
+								all_event.push(eventItem);
+							});
+							color_index++; // 選擇下一個顏色
+						}
+					});
+					
+					var calendar = new FullCalendar.Calendar(calendarEl, {
+						initialView: 'dayGridMonth',
+						locale: 'zh-tw',
+						height: 'auto',
+						aspectRatio: 1.5,
+						eventTimeFormat: {
+							hour: 'numeric',
+							minute: '2-digit',
+							omitZeroMinute: false,
+							meridiem: 'short'
+						},
+						events: all_event
+					});
+					calendar.render();
+					console.error('完成：', all_event);
+				})
+				.catch(error => {
+					console.error('發生錯誤：', error);
+				});
+		});
+		</script>
+		-->
+	</head>
+
+	<body class="is-preload">
+
+		<!-- Header -->
+		<header id="header">
+			<div class="inner">
+				<a href="#" class="image avatar"><img src="images/doctor.png" alt="" /></a>
+				<h1><strong>Dr. Chang</strong></h1>
+				<h5>Chi Mei Medical Center / Doctor</h5>
+				<div class="navbar">
+					<a href="#one" style="color: white;" >Patient Information</a>
+					<a href="#two" style="color: white;">AI Medical Result</a>
+					<!--<a href="#three" style="color: black;">班級公告</a> -->
+				  </div>
+			</div>
+		</header>
+
+		<!-- Main -->
+		<div id="main">
+
+			<!-- One -->
+				<section id="one">
+					<header class="major">
+						<h2>Patient Information</h2>
+					</header>
+					
+					<div class="scrollable-container">
+						<article id="news_article">
+							<a href="#" id="news_image_link1" class="image fit thumb"><img id="news_image1" src="images\user.png" alt="" /></a>
+							<h3 id="name_1">Loading...</h3>
+							<div class="news_article_inner">
+								<p id="date_1">Loading...</p>
+							</div>
+						</article>
+						<article id="news_article">
+							<a href="#" id="news_image_link2" class="image fit thumb"><img id="news_image2" src="images\user.png" alt="" /></a>
+							<h3 id="name_2">Loading...</h3>
+							<div class="news_article_inner">
+								<p id="date_2">Loading...</p>
+							</div>
+						</article>
+						<article id="news_article">
+							<a href="#" id="news_image_link3" class="image fit thumb"><img id="news_image3" src="images\user.png" alt="" /></a>
+							<h3 id="name_3">Loading...</h3>
+							<div class="news_article_inner">
+								<p id="date_3">Loading...</p>
+							</div>
+						</article>
+						<!--從 Google Sheets 取得資料-->
+						<script>
+							fetch('https://script.google.com/macros/s/AKfycbwMRU7Ee9CoNZB4c6pY3ywmr3spNrydfzYCjB69IIjFSLLCHr2kqD6oprPOwmGPeuqHGg/exec')
+							.then(response => response.json())
+							.then(data => {
+								// 更新 HTML 內容
+								console.log(data);
+								document.getElementById('name_1').textContent = data[data.length - 1][0];
+								document.getElementById('date_1').textContent = data[data.length - 1][1];
+								document.getElementById('name_2').textContent = data[data.length - 2][0];
+								document.getElementById('date_2').textContent = data[data.length - 2][1];
+								document.getElementById('name_3').textContent = data[data.length - 3][0];
+								document.getElementById('date_3').textContent = data[data.length - 3][1];
+								//document.getElementById('image').src = data[data.length - 1][2];
+							})
+							.catch(error => {
+								console.error('發生錯誤：', error);
+							});
+						</script>
+
+					</div>			
+
+				</section>
+			
+			<!-- two -->
+			<section id="two">
+				<header class="major">
+					<h2>AI Medical Result</h2>
+				</header>
+				<a id="share" class="image fit thumb"><img id="share_image" src="" alt="" /></a>
+				<!--從 Google Sheets 取得資料-->
+				<script>
+					fetch('https://script.google.com/macros/s/AKfycbwMRU7Ee9CoNZB4c6pY3ywmr3spNrydfzYCjB69IIjFSLLCHr2kqD6oprPOwmGPeuqHGg/exec')
+					.then(response => response.json())
+					.then(data => {
+						// 更新 HTML 内容
+						console.log(data);
+			
+						// 将六个字符串连接成一个字符串
+						let combinedString = data[data.length - 1][2] + data[data.length - 1][3] + data[data.length - 1][4] + data[data.length - 1][5] + data[data.length - 1][6] + data[data.length - 1][7];
+						
+						// 将 base64 编码的字符串解码为二进制数据
+						let binaryString = atob(combinedString);
+			
+						// 创建一个新的 Image 对象
+						let img = new Image();
+						// 将解码后的二进制数据赋值给 Image 对象的 src 属性
+						img.src = 'data:image/png;base64,' + btoa(binaryString);
+						
+						// 将 Image 对象添加到页面中指定的位置
+						let shareElement = document.getElementById('share');
+						shareElement.innerHTML = ''; // 清空原有内容
+						shareElement.appendChild(img);
+					})
+					.catch(error => {
+						console.error('发生错误：', error);
+					});
+				</script>
+			</section>
+
+		</div>
+
+		<!-- Footer -->
+			<footer id="footer">
+				<div class="inner">
+
+					<ul class="copyright">
+						<li>Prospective Medical Imaging Encryption Algorithm and Diagnostic Assistance System with Internet of Things Secure Transmission</li>
+						<li>Version 1 Design : Hank Chang</li>
+					</ul>
+				</div>
+				
+			</footer>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.poptrox.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
